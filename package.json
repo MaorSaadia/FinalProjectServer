@@ -2,7 +2,7 @@
   "name": "finalprojectserver",
   "version": "0.3.0",
   "description": "Backend Server For the FinalProject at College",
-  "main": "nodemon server.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
