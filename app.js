@@ -14,7 +14,7 @@ app.use(
   cors({
     credentials: true,
     methods: ["GET", "POST", "PATCH", "DELETE"],
-    origin: [process.env.FRONTEND_URI_1, process.env.FRONTEND_URI_2],
+    // origin: [process.env.FRONTEND_URI_1, process.env.FRONTEND_URI_2],
   })
 );
 

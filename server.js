@@ -10,12 +10,6 @@ const DB = process.env.DATABASE.replace(
   process.env.DATABASE_PASSWORD
 );
 
-// const DB =
-//   "mongodb+srv://finalProjectDemo:<PASSWORD>@cluster0.gftyeri.mongodb.net/finalProjectDemo?retryWrites=true&w=majority".replace(
-//     "<PASSWORD>",
-//     "Fullhouse1"
-//   );
-
 mongoose.connect(DB).then(() => {
   console.log("MongoDB Connected!");
 });
