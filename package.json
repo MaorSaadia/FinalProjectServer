@@ -2,7 +2,7 @@
   "name": "finalprojectserver",
   "version": "0.3.0",
   "description": "Backend Server For the FinalProject at College",
-  "main": "server.js",
+  "main": "nodemon server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon server.js"
