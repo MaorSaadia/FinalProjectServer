@@ -1,0 +1,28 @@
+{
+  "name": "finalprojectserver",
+  "version": "0.3.0",
+  "description": "Backend Server For the FinalProject at College",
+  "main": "backend/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
+    "cors": "^2.8.5",
+    "datauri": "^4.1.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "html-to-text": "^9.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.4",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7",
+    "pug": "^3.0.2",
+    "validator": "^13.11.0"
+  }
+}
