@@ -138,10 +138,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
   try {
-    // const resetUrl = `${req.protocol}://${req.get(
-    //   "host"
-    // )}/api/v1/${userType}s/forgotPassword`;
-
     await new Email(user, OTP).sendPasswordReset();
 
     res.status(200).json({
@@ -152,9 +148,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.otp = undefined;
     user.otpExpire = undefined;
     await user.save({ validateBeforeSave: false });
-    return next(
-      new AppError("הייתה שגיאה בשליחת האימייל. נסה שוב מאוחר יותר!", 500)
-    );
+    return next(new AppError(err.message, 500));
+
+    // return next(
+    //   new AppError("הייתה שגיאה בשליחת האימייל. נסה שוב מאוחר יותר!", 500)
+    // );
   }
 });
 
@@ -194,7 +192,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
-  console.log(req.headers);
+
   let token;
   if (
     req.headers.authorization &&
