@@ -131,13 +131,12 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   console.log("OTP: ", OTP);
 
   await user.save({ validateBeforeSave: false });
-
   try {
-    const resetUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/api/v1/${user}s/forgotPassword`;
+    // const resetUrl = `${req.protocol}://${req.get(
+    //   "host"
+    // )}/api/v1/${userType}s/forgotPassword`;
 
-    await new Email(user, resetUrl, OTP).sendPasswordReset();
+    await new Email(user, OTP).sendPasswordReset();
 
     res.status(200).json({
       status: "success",
@@ -147,12 +146,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.otp = undefined;
     user.otpExpire = undefined;
     await user.save({ validateBeforeSave: false });
-    // console.log(err.message);
     return next(
-      new AppError(
-        "Theres was an error sending the email. Try again later!",
-        500
-      )
+      new AppError("הייתה שגיאה בשליחת האימייל. נסה שוב מאוחר יותר!", 500)
     );
   }
 });
@@ -205,9 +200,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   if (!token) {
-    return next(
-      new AppError("Your are not loged in! Please log in to get access", 401)
-    );
+    return next(new AppError("אתה לא מחובר! אנא היכנס כדי לקבל גישה", 401));
   }
   // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
@@ -215,12 +208,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 3) Check if user still exists
   const currentUser = await Student.findById(decoded.id);
   if (!currentUser) {
-    return next(
-      new AppError(
-        "The user belonging to this token does no longer exist!",
-        401
-      )
-    );
+    return next(new AppError("המשתמש זה אינו קיים יותר!", 401));
   }
 
   // 4) Check if user changed password after the token was issued

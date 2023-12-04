@@ -13,7 +13,7 @@ const handleDuplicateFieldsDB = (err) => {
     return new AppError("האימייל שהוזן כבר קיים במערכת", 400);
   }
 
-  const message = `Duplicate field value: ${value}. Please use another value!`;
+  const message = `ערך שדה כפול: ${value}. אנא השתמש בערך אחר!`;
   return new AppError(message, 400);
 };
 
@@ -28,7 +28,7 @@ const handleJWTError = () =>
   new AppError("Invalid token. Please log in again!", 401);
 
 const handleJWTExpiredError = () =>
-  new AppError("Your token has expired! Please log in again.", 401);
+  new AppError("פג תוקף האסימון שלך! נא להיכנס שוב.", 401);
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({

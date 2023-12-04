@@ -3,10 +3,9 @@ const pug = require("pug");
 const { convert } = require("html-to-text");
 
 module.exports = class Email {
-  constructor(user, url, OTP) {
+  constructor(user, OTP) {
     this.to = user.email;
     this.firstName = user.name.split(" ")[0];
-    this.url = url;
     this.OTP = OTP;
     this.from = `HomeStudents<${process.env.EMAIL_FORM}>`;
   }
@@ -37,7 +36,6 @@ module.exports = class Email {
     // 1) Render HTML based on template
     const html = pug.renderFile(`${__dirname}/../views/${template}.pug`, {
       firstName: this.firstName,
-      url: this.url,
       OTP: this.OTP,
       subject,
     });
@@ -60,9 +58,6 @@ module.exports = class Email {
   }
 
   async sendPasswordReset() {
-    await this.send(
-      "resetPasswordEmail",
-      "הקוד שלך לאיפוס סיסמה (תקף ל10 דקות)"
-    );
+    await this.send("resetPasswordEmail", "הקוד שלך לאיפוס סיסמה");
   }
 };
