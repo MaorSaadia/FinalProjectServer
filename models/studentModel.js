@@ -15,7 +15,6 @@ const studentSchema = new mongoose.Schema({
         "https://res.cloudinary.com/dtkpp77xw/image/upload/v1701189732/default_nk5c5h.png",
     },
   },
-
   age: {
     type: String,
     required: [true, "נא למלא גיל"],

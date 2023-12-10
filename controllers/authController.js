@@ -148,11 +148,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.otp = undefined;
     user.otpExpire = undefined;
     await user.save({ validateBeforeSave: false });
-    return next(new AppError(err.message, 500));
-
-    // return next(
-    //   new AppError("הייתה שגיאה בשליחת האימייל. נסה שוב מאוחר יותר!", 500)
-    // );
+    return next(
+      new AppError("הייתה שגיאה בשליחת האימייל. נסה שוב מאוחר יותר!", 500)
+    );
   }
 });
 
