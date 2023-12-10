@@ -24,7 +24,10 @@ exports.userChats = catchAsync(async (req, res, next) => {
   const chat = await Chat.find({
     members: { $in: [req.params.userId] },
   });
-  res.status(200).json(chat);
+  res.status(200).json({
+    results: chat.length,
+    chat,
+  });
 });
 
 exports.findChat = catchAsync(async (req, res, next) => {
