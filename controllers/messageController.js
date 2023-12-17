@@ -3,12 +3,13 @@ const AppError = require("../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 exports.addMessage = catchAsync(async (req, res, next) => {
-  const { chatId, senderId, messageText } = req.body;
+  const { chatId, senderId, messageText, replyingTo } = req.body;
 
   const message = new Message({
     chatId,
     senderId,
     messageText,
+    replyingTo,
   });
   const result = await message.save();
   res.status(200).json(result);
