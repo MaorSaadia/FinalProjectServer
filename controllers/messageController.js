@@ -33,15 +33,18 @@ exports.uploadImage = upload.single("image");
 exports.addMessage = catchAsync(async (req, res, next) => {
   const { chatId, senderId, messageText, replyingTo, image } = req.body;
 
+  const replyingToObject =
+    typeof replyingTo === "string" ? JSON.parse(replyingTo) : replyingTo;
+
   const message = new Message({
     chatId,
     senderId,
     messageText,
-    replyingTo,
+    replyingTo: replyingToObject,
     image,
   });
 
-  if (req.file || image) {
+  if (req.file) {
     const file = getDataUri(req.file);
 
     const uploadToCloud = await cloudinary.v2.uploader.upload(file.content, {
