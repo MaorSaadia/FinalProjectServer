@@ -38,6 +38,7 @@ exports.addMessage = catchAsync(async (req, res, next) => {
     senderId,
     messageText,
     replyingTo,
+    image,
   });
 
   if (req.file || image) {
