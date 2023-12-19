@@ -14,6 +14,10 @@ const messageSchema = mongoose.Schema(
     replyingTo: {
       type: Object,
     },
+    image: {
+      public_id: { type: String },
+      url: { type: String },
+    },
   },
   { timestamps: true }
 );

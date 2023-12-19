@@ -61,6 +61,8 @@ exports.getOne = (Model, popOptions) =>
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
+    // doc.findOne({_id: req.parmas.id})
+
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
     }

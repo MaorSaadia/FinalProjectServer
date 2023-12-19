@@ -13,6 +13,15 @@ exports.createChat = catchAsync(async (req, res, next) => {
 });
 
 exports.userChats = catchAsync(async (req, res, next) => {
+  //   try {
+  //     const chat = await Chat.find({
+  //       members: { $in: [req.params.userId] },
+  //     });
+  //     res.status(200).json(chat);
+  //   } catch (err) {
+  //     return next(new AppError(err.message, 500));
+  //   }
+
   const chat = await Chat.find({
     members: { $in: [req.params.userId] },
   });

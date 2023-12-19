@@ -76,7 +76,9 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       await cloudinary.v2.uploader.destroy(req.user.avatar.public_id);
     }
 
-    const uploadToCloud = await cloudinary.v2.uploader.upload(file.content);
+    const uploadToCloud = await cloudinary.v2.uploader.upload(file.content, {
+      folder: "Students",
+    });
     filterdedBody.avatar = {
       public_id: uploadToCloud.public_id,
       url: uploadToCloud.secure_url,
