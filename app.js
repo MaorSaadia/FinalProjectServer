@@ -1,5 +1,7 @@
 const path = require("path");
 const express = require("express");
+const http = require("http");
+const socketio = require("socket.io");
 const cors = require("cors");
 const favicon = require("serve-favicon");
 
@@ -11,6 +13,9 @@ const AppError = require("./utils/appError.js");
 const globalErrorHandler = require("./controllers/errorController.js");
 
 const app = express();
+
+const server = http.createServer(app);
+const io = socketio(server);
 
 app.use(express.json());
 app.use(
@@ -43,5 +48,39 @@ app.all("*", (req, res, next) => {
 });
 
 app.use(globalErrorHandler);
+
+let activeUsers = [];
+
+io.on("connection", (socket) => {
+  // add new User
+  socket.on("new-user-add", (newUserId) => {
+    // if user is not added previously
+    if (!activeUsers.some((user) => user.userId === newUserId)) {
+      activeUsers.push({
+        userId: newUserId,
+        socketId: socket.id,
+      });
+    }
+    // console.log("Connected Users", activeUsers);
+    io.emit("get-users", activeUsers);
+  });
+
+  // send message
+  socket.on("send-message", (data) => {
+    const { ouid } = data;
+    const user = activeUsers.find((user) => user.userId === ouid);
+    // console.log("Data", data);
+    // console.log(user);
+    if (user) {
+      io.to(user.socketId).emit("receive-message", data);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    activeUsers = activeUsers.filter((user) => user.socketId !== socket.id);
+    // console.log("User Disconnected", activeUsers);
+    io.emit("get-users", activeUsers);
+  });
+});
 
 module.exports = app;
