@@ -15,21 +15,13 @@ const globalErrorHandler = require("./controllers/errorController.js");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  })
+);
 
-// app.use(
-//   cors({
-//     credentials: true,
-//     methods: ["GET", "POST", "PATCH", "DELETE"],
-//   })
-// );
-
-const server = http.createServer(app);
-const io = new socketio.Server(server, {
-  cors: {
-    origin: "https://finalprojectserver0-5.onrender.com",
-  },
-});
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.set("view engine", "pug");
@@ -55,6 +47,14 @@ app.all("*", (req, res, next) => {
 
 app.use(globalErrorHandler);
 
+// socket.io
+const server = http.createServer(app);
+const io = new socketio.Server(server, {
+  cors: {
+    origin: "https://finalprojectserver0-5.onrender.com",
+    credentials: true,
+  },
+});
 let activeUsers = [];
 
 io.on("connection", (socket) => {
