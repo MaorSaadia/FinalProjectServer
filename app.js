@@ -15,7 +15,11 @@ const globalErrorHandler = require("./controllers/errorController.js");
 const app = express();
 
 const server = http.createServer(app);
-const io = socketio(server);
+const io = new socketio.Server(server, {
+  cors: {
+    origin: "https://finalprojectserver0-5.onrender.com",
+  },
+});
 
 app.use(express.json());
 app.use(
@@ -61,7 +65,7 @@ io.on("connection", (socket) => {
         socketId: socket.id,
       });
     }
-    // console.log("Connected Users", activeUsers);
+    console.log("Connected Users", activeUsers);
     io.emit("get-users", activeUsers);
   });
 
