@@ -4,7 +4,7 @@ const cloudinary = require("cloudinary");
 
 const app = require("./app.js");
 
-dotenv.config({ path: "../.env" });
+dotenv.config();
 
 const DB = process.env.DATABASE.replace(
   "<PASSWORD>",

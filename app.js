@@ -57,7 +57,7 @@ const io = new socketio.Server(server, {
 });
 let activeUsers = [];
 
-server.listen(8800);
+// server.listen(8800);
 
 io.on("connection", (socket) => {
   // add new User
