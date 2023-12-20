@@ -57,6 +57,8 @@ const io = new socketio.Server(server, {
 });
 let activeUsers = [];
 
+server.listen(8800);
+
 io.on("connection", (socket) => {
   // add new User
   socket.on("new-user-add", (newUserId) => {
@@ -67,7 +69,7 @@ io.on("connection", (socket) => {
         socketId: socket.id,
       });
     }
-    console.log("Connected Users", activeUsers);
+    // console.log("Connected Users", activeUsers);
     io.emit("get-users", activeUsers);
   });
 
