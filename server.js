@@ -43,7 +43,7 @@ io.on("connection", (socket) => {
         socketId: socket.id,
       });
     }
-    console.log("Connected Users", activeUsers);
+    // console.log("Connected Users", activeUsers);
     io.emit("get-users", activeUsers);
   });
 
